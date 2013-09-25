@@ -12,6 +12,7 @@
   }
 
   Ship.inherits(Asteroids.MovingObject);
+  Ship.MAX_SPEED = 1.3;
 
   Ship.initialize = function(color) {
     return new Ship(color);
@@ -56,27 +57,33 @@
       this.xSpd = -1;
     }
 
-    if (this.ySpd > 1) {
-      this.ySpd = 1;
-    } else if (this.ySpd < -1) {
-      this.ySpd = -1;
+    if (this.ySpd > Ship.MAX_SPEED) {
+      this.ySpd = Ship.MAX_SPEED;
+    } else if (this.ySpd < -(Ship.MAX_SPEED)) {
+      this.ySpd = -(Ship.MAX_SPEED);
     }
   }
 
   Ship.prototype.torque = function(pivot) {
     if (pivot === "right") {
-      this.direction = (this.direction + 0.1) % (2 * Math.PI)
+      this.direction = (this.direction + 0.05) % (2 * Math.PI)
     } else if (pivot === "left") {
-      this.direction = (this.direction - 0.1 + (2 * Math.PI)) % (2 * Math.PI);
+      this.direction = (this.direction - 0.05 + (2 * Math.PI)) % (2 * Math.PI);
     } else {
       alert("invalid movement");
     }
   }
 
+  Ship.prototype.drag = function() {
+    this.xSpd = (this.xSpd * 0.997);
+    this.ySpd = (this.ySpd * 0.997);
+  }
+
   Ship.prototype.shoot = function() {
-    console.log("shot a bullet");
-    var pos = [this.xCoord, this.yCoord];
-    return Asteroids.Bullet.initialize(pos, this.direction);
+    var xNose = this.xCoord + ((this.radius + 10) * Math.cos(this.direction));
+    var yNose = this.yCoord + ((this.radius + 10) * Math.sin(this.direction));
+
+    return Asteroids.Bullet.initialize([xNose, yNose], this.direction);
   }
 
 })(this);

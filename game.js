@@ -31,7 +31,6 @@
   Game.prototype.splitAsteroid = function(asteroid) {
     if (asteroid.radius >= 5) {
       var newAsteroids = asteroid.split();
-      console.log(this);
       this.asteroids.push(newAsteroids[0]);
       this.asteroids.push(newAsteroids[1]);
     }
@@ -84,6 +83,7 @@
       bullet.move(that.DIM_X, that.DIM_Y);
     });
     that.ship.move(that.DIM_X, that.DIM_Y);
+    that.ship.drag();
   }
 
   Game.prototype.step = function() {
@@ -94,21 +94,21 @@
 
   Game.prototype.start = function(wind) {
     var that = this;
-    key('f', function(){
+    key('space', function(){
       // if (that.bullets.length <= 10) {
         that.bullets.push(that.ship.shoot());
       // }
     });
 
     this.windowID = wind.setInterval(function() {
-      if (key.isPressed("up")) {
-        that.ship.power(0.05);
+      if (key.isPressed('up')) {
+        that.ship.power(0.02);
       }
-      if (key.isPressed("left")) {
-        that.ship.torque("left");
+      if (key.isPressed('left')) {
+        that.ship.torque('left');
       }
-      if (key.isPressed("right")) {
-        that.ship.torque("right");
+      if (key.isPressed('right')) {
+        that.ship.torque('right');
       }
       that.step();
     }, 6.25);
