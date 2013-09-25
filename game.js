@@ -46,15 +46,22 @@
     that.asteroids.forEach(function(asteroid) {
       asteroid.draw(that.ctx);
     });
+    that.ship.bullets.forEach(function(bullet) {
+      bullet.draw(that.ctx);
+    });
     that.ship.draw(that.ctx);
   }
 
   Game.prototype.move = function() {
     var that = this;
-    this.asteroids.forEach(function(asteroid) {
+
+    that.asteroids.forEach(function(asteroid) {
       asteroid.move(that.DIM_X, that.DIM_Y);
     });
-    this.ship.move(that.DIM_X, that.DIM_Y);
+    that.ship.bullets.forEach(function(bullet) {
+      bullet.move(that.DIM_X, that.DIM_Y);
+    });
+    that.ship.move(that.DIM_X, that.DIM_Y);
   }
 
   Game.prototype.step = function() {
@@ -65,6 +72,10 @@
 
   Game.prototype.start = function(wind) {
     var that = this;
+    key('f', function(){
+      that.ship.shoot();
+    });
+
     this.windowID = wind.setInterval(function() {
       if (key.isPressed("up")) {
         that.ship.power(0.05);

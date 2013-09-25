@@ -9,6 +9,7 @@
     this.direction = (3 * Math.PI) / 2;
     this.radius = 10;
     this.color = color;
+    this.bullets = [];
   }
 
   Ship.inherits(Asteroids.MovingObject);
@@ -26,7 +27,6 @@
     var lT = (3 * Math.PI) / 4;
     var rT = (5 * Math.PI) / 4;
 
-    // ctx.moveTo(this.xCoord, this.yCoord); // give the (x,y) coordinates
     var xNose = this.xCoord + ((this.radius + 10) * Math.cos(this.direction));
     var yNose = this.yCoord + ((this.radius + 10) * Math.sin(this.direction));
 
@@ -41,15 +41,12 @@
     ctx.lineTo(xRight, yRight);
     ctx.lineTo(xNose, yNose);
 
-
     ctx.stroke();
   }
 
   Ship.prototype.power = function (impulse) {
     var x = Math.cos(this.direction);
-    var y = (Math.sin(this.direction));
-
-    console.log([x, y]);
+    var y = Math.sin(this.direction);
 
     this.xSpd += (x * impulse);
     this.ySpd += (y * impulse);
@@ -75,6 +72,12 @@
     } else {
       alert("invalid movement");
     }
+  }
+
+  Ship.prototype.shoot = function() {
+    console.log("shot a bullet");
+    var pos = [this.xCoord, this.yCoord];
+    this.bullets.push(Asteroids.Bullet.initialize(pos, this.direction));
   }
 
 })(this);
