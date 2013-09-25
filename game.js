@@ -6,6 +6,7 @@
     this.DIM_X = width;
     this.DIM_Y = height;
     this.asteroids = this.addAsteroids(20);
+    this.bullets = [];
     this.ship = root.Asteroids.Ship.initialize("#FFFFFF");
   }
 
@@ -27,13 +28,34 @@
     stop();
   }
 
+  Game.prototype.splitAsteroid = function(asteroid) {
+    if (asteroid.radius >= 5) {
+      var newAsteroids = asteroid.split();
+      console.log(this);
+      this.asteroids.push(newAsteroids[0]);
+      this.asteroids.push(newAsteroids[1]);
+    }
+  }
+
   Game.prototype.checkCollisions = function() {
     var that = this;
-    this.asteroids.forEach(function(asteroid) {
+    this.asteroids.forEach(function(asteroid, aIdx) {
       if (asteroid.isCollidedWith(that.ship)) {
         // this.alert("Ya done son~");
         // that.stop();
       }
+
+      that.bullets.forEach(function(bullet, bIdx) {
+        if (asteroid.isCollidedWith(bullet)) {
+
+          that.splitAsteroid(asteroid, bullet);
+          delete that.asteroids[aIdx];
+          that.asteroids.splice(aIdx, 1);
+
+          delete that.bullets[bIdx];
+          that.bullets.splice(bIdx, 1);
+        }
+      });
     })
   }
 
@@ -46,7 +68,7 @@
     that.asteroids.forEach(function(asteroid) {
       asteroid.draw(that.ctx);
     });
-    that.ship.bullets.forEach(function(bullet) {
+    that.bullets.forEach(function(bullet) {
       bullet.draw(that.ctx);
     });
     that.ship.draw(that.ctx);
@@ -58,7 +80,7 @@
     that.asteroids.forEach(function(asteroid) {
       asteroid.move(that.DIM_X, that.DIM_Y);
     });
-    that.ship.bullets.forEach(function(bullet) {
+    that.bullets.forEach(function(bullet) {
       bullet.move(that.DIM_X, that.DIM_Y);
     });
     that.ship.move(that.DIM_X, that.DIM_Y);
@@ -73,7 +95,9 @@
   Game.prototype.start = function(wind) {
     var that = this;
     key('f', function(){
-      that.ship.shoot();
+      // if (that.bullets.length <= 10) {
+        that.bullets.push(that.ship.shoot());
+      // }
     });
 
     this.windowID = wind.setInterval(function() {

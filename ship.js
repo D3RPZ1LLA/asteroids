@@ -9,7 +9,6 @@
     this.direction = (3 * Math.PI) / 2;
     this.radius = 10;
     this.color = color;
-    this.bullets = [];
   }
 
   Ship.inherits(Asteroids.MovingObject);
@@ -77,7 +76,7 @@
   Ship.prototype.shoot = function() {
     console.log("shot a bullet");
     var pos = [this.xCoord, this.yCoord];
-    this.bullets.push(Asteroids.Bullet.initialize(pos, this.direction));
+    return Asteroids.Bullet.initialize(pos, this.direction);
   }
 
 })(this);
