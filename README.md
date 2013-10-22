@@ -1,6 +1,10 @@
 Asteroids
 =========
 
+www.k5nobi.github.io/asteroids
+
+
+
 An implementation of the classic asteroids game. Written in JavaScript, drawn with CSS canvas.
 
   - Floating objects wrap around the canvas. This was implemented by taking a floating object's coordinates displaced by the overflow amount modulo the canvas dimension plus the overflow amount and then finally re-displaced by the overflow.
