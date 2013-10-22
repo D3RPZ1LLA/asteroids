@@ -1,7 +1,7 @@
 Asteroids
 =========
 
-www.k5nobi.github.io/asteroids
+k5nobi.github.io/asteroids
 
 
 
