@@ -1,5 +1,24 @@
 <html>
   <head>
+		<link rel="stylesheet" type="text/css" href="main.css">
+		<style>
+			h1 {
+				text-align: center;
+				font-style: italic;
+				margin-top: 10px;
+				font-size: 300%;
+			}
+			canvas {
+
+			}
+			div {
+				width: 500px;
+				margin: 50px auto;
+			}
+			p {
+				text-align: center;
+			}
+		</style>
     <script src="keymaster/keymaster.min.js"></script>
     <script src="moving_object.js"></script>
     <script src="asteroids.js"></script>
@@ -9,13 +28,21 @@
   </head>
 
   <body>
+		<h1>Asteroids</h1>
+		<div id="game">
+		</div>
+		<p>
+			<strong>Controls:</strong> Arrow keys to move; Spacebar to shoot.
+		</p>
+		
+		
     <script>
       var canvas = document.createElement("canvas");
       canvas.setAttribute("width", "500");
       canvas.setAttribute("height", "500");
 
-      var body = document.getElementsByTagName("body")[0];
-      body.appendChild(canvas);
+      var div = document.getElementById("game");
+      div.appendChild(canvas);
 
       var game = new Asteroids.Game(canvas.getContext("2d"), 500, 500);
       game.start(window);
