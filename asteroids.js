@@ -14,9 +14,13 @@
   Asteroid.COLOR = "#FFFFFF";
 
   Asteroid.inherits(Asteroids.MovingObject);
+	
+	Asteroid.randomCoord = function(max) {
+		return (Math.random() * (max - 250)) - 125;
+	}
 
   Asteroid.randomAsteroid = function(maxX, maxY) {
-    var pos = [Math.random() * maxX, Math.random() * maxY];
+    var pos = [Asteroid.randomCoord(maxX), Asteroid.randomCoord(maxY)];
     var vel = [Math.random() - 0.5, Math.random() - 0.5];
     var radius = (Math.random() + 1) * Asteroid.MAX_RADIUS;
 

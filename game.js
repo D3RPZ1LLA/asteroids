@@ -6,7 +6,7 @@
     this.ctx = ctx;
     this.DIM_X = width;
     this.DIM_Y = height;
-    this.asteroids = this.addAsteroids(20);
+    this.asteroids = this.addAsteroids(15);
     this.bullets = [];
     this.ship = root.Asteroids.Ship.initialize("#FFFFFF");
   }
