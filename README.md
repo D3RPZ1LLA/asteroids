@@ -1,7 +1,6 @@
-
 Asteroids
 =========
-<a href="k5nobi.github.io/asteroids">
+<a href="http://k5nobi.github.io/asteroids">
 k5nobi.github.io/asteroids
 </a>
 
