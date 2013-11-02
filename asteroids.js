@@ -18,10 +18,15 @@
 	Asteroid.randomCoord = function(max) {
 		return (Math.random() * (max - 250)) - 125;
 	}
+	
+	Asteroid.randomVelocity = function() {
+		var positive = (Math.random() - 0.5) >= 0 ? 1 : -1;
+		return (Math.random() / 6) * positive;
+	}
 
   Asteroid.randomAsteroid = function(maxX, maxY) {
     var pos = [Asteroid.randomCoord(maxX), Asteroid.randomCoord(maxY)];
-    var vel = [Math.random() - 0.5, Math.random() - 0.5];
+    var vel = [Asteroid.randomVelocity(), Asteroid.randomVelocity()];
     var radius = (Math.random() + 1) * Asteroid.MAX_RADIUS;
 
     return new Asteroid(pos, vel, radius, Asteroid.COLOR);
