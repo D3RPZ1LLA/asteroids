@@ -59,11 +59,11 @@
     })
   }
 
-  Game.prototype.checkBulletLifeSpan = function () {
+  Game.prototype.checkBulletDistance = function () {
     var that = this;
     this.bullets.forEach(function(bullet, bldx) {
-      bullet.duration -= 1;
-      if ( bullet.duration <= 0 ) {
+      bullet.distance += 1;
+      if ( bullet.distance >= 150 ) {
         delete that.bullets[bldx];
         that.bullets.splice(bldx, 1);
       }
@@ -102,7 +102,7 @@
     this.move();
     this.draw();
     this.checkCollisions();
-    this.checkBulletLifeSpan();
+    this.checkBulletDistance();
   }
 
   Game.prototype.start = function(wind) {

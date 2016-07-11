@@ -11,7 +11,7 @@
     this.ySpd = spd[1];
     this.radius = 1;
     this.color = "#FFFFFF";
-    this.duration = 300;
+    this.distance = 0;
   }
 
   Bullet.BULLET_SPEED = 1.5;
