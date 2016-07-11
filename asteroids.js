@@ -53,6 +53,26 @@
     }
   }
 
+  Asteroid.prototype.randomColor = function( ) {
+    switch ( Math.floor( Math.random() * 13 ) % 4 ) {
+      case 0:
+        this.color = Asteroid.COLORS.yellow;
+        break;
+      case 1:
+        this.color = Asteroid.COLORS.red;
+        break;
+      case 2:
+        this.color = Asteroid.COLORS.teal;
+        break;
+      case 3:
+        this.color = Asteroid.COLORS.blue;
+        break;
+      default:
+        this.color = Asteroid.COLORS.white;
+        break;
+    }
+  }
+
   Asteroid.prototype.split = function () {
     var pos = [this.xCoord, this.yCoord];
     var velA = [Math.random() - 0.5, Math.random() - 0.5];
@@ -61,6 +81,10 @@
 
     asteroidA = Asteroid.randomColorAsteroid( pos, velA, radius );
     asteroidB = Asteroid.randomColorAsteroid( pos, velB, radius );
+
+    do {
+      asteroidB.randomColor( );
+    } while ( asteroidA.color == asteroidB.color );
 
     return [asteroidA, asteroidB];
   }
