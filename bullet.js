@@ -1,8 +1,6 @@
 (function (root) {
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
-
-
   var Bullet = Asteroids.Bullet = function(pos, shipDirection) {
     var spd = [ Bullet.BULLET_SPEED * Math.cos(shipDirection),
                 Bullet.BULLET_SPEED * Math.sin(shipDirection) ];
@@ -13,6 +11,7 @@
     this.ySpd = spd[1];
     this.radius = 1;
     this.color = "#FFFFFF";
+    this.duration = 400;
   }
 
   Bullet.BULLET_SPEED = 1.5;

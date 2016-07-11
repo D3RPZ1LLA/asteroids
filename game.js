@@ -59,6 +59,17 @@
     })
   }
 
+  Game.prototype.checkBulletLifeSpan = function () {
+    var that = this;
+    this.bullets.forEach(function(bullet, bldx) {
+      bullet.duration -= 1;
+      if ( bullet.duration <= 0 ) {
+        delete that.bullets[bldx];
+        that.bullets.splice(bldx, 1);
+      }
+    })
+  }
+
   Game.prototype.draw = function() {
     var that = this;
 
@@ -91,6 +102,7 @@
     this.move();
     this.draw();
     this.checkCollisions();
+    this.checkBulletLifeSpan();
   }
 
   Game.prototype.start = function(wind) {
