@@ -7,18 +7,24 @@
     this.xSpd = vel[0];
     this.ySpd = vel[1];
     this.radius = radius;
-    this.color = color;
+    this.color = !!color ? color : Asteroid.COLORS.white;
   }
 
   Asteroid.MAX_RADIUS = 10;
-  Asteroid.COLOR = "#FFFFFF";
+  Asteroid.COLORS = {
+    'yellow': '#e4ca14',
+    'red': '#f32b04',
+    'teal': '#4bf0d4',
+    'blue': '#3a2cff',
+    'white': '#FFFFFF'
+  }
 
   Asteroid.inherits(Asteroids.MovingObject);
-	
+
 	Asteroid.randomCoord = function(max) {
 		return (Math.random() * (max - 250)) - 125;
 	}
-	
+
 	Asteroid.randomVelocity = function() {
 		var positive = (Math.random() - 0.5) >= 0 ? 1 : -1;
 		return (Math.random() / 6) * positive;
@@ -29,7 +35,22 @@
     var vel = [Asteroid.randomVelocity(), Asteroid.randomVelocity()];
     var radius = (Math.random() + 1) * Asteroid.MAX_RADIUS;
 
-    return new Asteroid(pos, vel, radius, Asteroid.COLOR);
+    return new Asteroid(pos, vel, radius);
+  }
+
+  Asteroid.randomColorAsteroid = function( pos, vel, radius ) {
+    switch ( Math.floor( Math.random() * 13 ) % 4 ) {
+      case 0:
+        return new Asteroid( pos, vel, radius, Asteroid.COLORS.yellow );
+      case 1:
+        return new Asteroid( pos, vel, radius, Asteroid.COLORS.red );
+      case 2:
+        return new Asteroid( pos, vel, radius, Asteroid.COLORS.teal );
+      case 3:
+        return new Asteroid( pos, vel, radius, Asteroid.COLORS.blue );
+      default:
+        return new Asteroid( pos, vel, radius, Asteroid.COLORS.white );
+    }
   }
 
   Asteroid.prototype.split = function () {
@@ -37,8 +58,9 @@
     var velA = [Math.random() - 0.5, Math.random() - 0.5];
     var velB = [Math.random() - 0.5, Math.random() - 0.5];
     var radius = this.radius / 2;
-    asteroidA = new Asteroid(pos, velA, radius, Asteroid.COLOR);
-    asteroidB = new Asteroid(pos, velB, radius, Asteroid.COLOR);
+
+    asteroidA = Asteroid.randomColorAsteroid( pos, velA, radius );
+    asteroidB = Asteroid.randomColorAsteroid( pos, velB, radius );
 
     return [asteroidA, asteroidB];
   }
