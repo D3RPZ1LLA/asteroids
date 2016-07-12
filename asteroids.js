@@ -19,16 +19,24 @@
     'white': '#FFFFFF'
   }
 
+  Asteroid.COLOR_VALUES = {
+    '#e4ca14': 'yellow',
+    '#f32b04': 'red',
+    '#4bf0d4': 'teal',
+    '#3a2cff': 'blue',
+    '#FFFFFF': 'white'
+  }
+
   Asteroid.inherits(Asteroids.MovingObject);
 
-	Asteroid.randomCoord = function(max) {
-		return (Math.random() * (max - 250)) - 125;
-	}
+  Asteroid.randomCoord = function(max) {
+    return (Math.random() * (max - 250)) - 125;
+  }
 
-	Asteroid.randomVelocity = function() {
-		var positive = (Math.random() - 0.5) >= 0 ? 1 : -1;
-		return (Math.random() / 6) * positive;
-	}
+  Asteroid.randomVelocity = function() {
+    var positive = (Math.random() - 0.5) >= 0 ? 1 : -1;
+    return (Math.random() / 6) * positive;
+  }
 
   Asteroid.randomAsteroid = function(maxX, maxY) {
     var pos = [Asteroid.randomCoord(maxX), Asteroid.randomCoord(maxY)];
@@ -38,39 +46,34 @@
     return new Asteroid(pos, vel, radius);
   }
 
-  Asteroid.randomColorAsteroid = function( pos, vel, radius ) {
-    switch ( Math.floor( Math.random() * 13 ) % 4 ) {
-      case 0:
-        return new Asteroid( pos, vel, radius, Asteroid.COLORS.yellow );
-      case 1:
-        return new Asteroid( pos, vel, radius, Asteroid.COLORS.red );
-      case 2:
-        return new Asteroid( pos, vel, radius, Asteroid.COLORS.teal );
-      case 3:
-        return new Asteroid( pos, vel, radius, Asteroid.COLORS.blue );
-      default:
-        return new Asteroid( pos, vel, radius, Asteroid.COLORS.white );
+  Asteroid.randomColorAsteroid = function( pos, vel, radius, bannedColors ) {
+    if ( typeof bannedColors == 'undefined') {
+      bannedColors = { };
     }
-  }
+    var num = Math.floor( Math.random() * 13 );
+    var color;
+    do {
+      num += 1
+      switch ( num % 4 ) {
+        case 0:
+          color = 'yellow';
+          break;
+        case 1:
+          color = 'red';
+          break;
+        case 2:
+          color = 'teal';
+          break;
+        case 3:
+          color = 'blue';
+          break;
+        default:
+          color = 'white';
+          break;
+      }
+    } while ( !!bannedColors[color] );
 
-  Asteroid.prototype.randomColor = function( ) {
-    switch ( Math.floor( Math.random() * 13 ) % 4 ) {
-      case 0:
-        this.color = Asteroid.COLORS.yellow;
-        break;
-      case 1:
-        this.color = Asteroid.COLORS.red;
-        break;
-      case 2:
-        this.color = Asteroid.COLORS.teal;
-        break;
-      case 3:
-        this.color = Asteroid.COLORS.blue;
-        break;
-      default:
-        this.color = Asteroid.COLORS.white;
-        break;
-    }
+    return new Asteroid(pos, vel, radius, Asteroid.COLORS[color] );
   }
 
   Asteroid.prototype.split = function () {
@@ -79,12 +82,17 @@
     var velB = [Math.random() - 0.5, Math.random() - 0.5];
     var radius = this.radius / 2;
 
-    asteroidA = Asteroid.randomColorAsteroid( pos, velA, radius );
-    asteroidB = Asteroid.randomColorAsteroid( pos, velB, radius );
+    var bannedColors = {
+      'yellow': false,
+      'red': false,
+      'teal': false,
+      'blue': false
+    };
 
-    do {
-      asteroidB.randomColor( );
-    } while ( asteroidA.color == asteroidB.color );
+    bannedColors[ Asteroid.COLOR_VALUES[ this.color ] ] = true;
+    asteroidA = Asteroid.randomColorAsteroid( pos, velA, radius, bannedColors );
+    bannedColors[ Asteroid.COLOR_VALUES[ asteroidA.color ] ] = true;
+    asteroidB = Asteroid.randomColorAsteroid( pos, velB, radius, bannedColors );
 
     return [asteroidA, asteroidB];
   }
