@@ -113,11 +113,7 @@
 
   Game.prototype.start = function(wind) {
     var that = this;
-    // key('space', function(){
-    //   // if (that.bullets.length <= 10) {
-    //     that.bullets.push(that.ship.shoot());
-    //   // }
-    // });
+    var counter = 0;
 
     this.windowID = wind.setInterval(function() {
       if ( key.isPressed('up') || that.pressedButtons.up ) {
@@ -130,7 +126,12 @@
         that.ship.torque('right');
       }
       if ( key.isPressed('space') || that.pressedButtons.space ) {
-        that.bullets.push(that.ship.shoot());
+        if ( counter == 0 ) {
+          that.bullets.push(that.ship.shoot());
+        }
+        counter = ( counter + 1 ) % 16;
+      } else if ( counter != 0 ) {
+        counter = 0;
       }
       that.step();
     }, 6.25);
