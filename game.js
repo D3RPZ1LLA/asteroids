@@ -9,7 +9,7 @@
     this.asteroids = this.addAsteroids(15);
     this.bullets = [];
     this.ship = root.Asteroids.Ship.initialize("#FFFFFF");
-    this.pressedButtons = {
+    this.pressedKeys = {
       up: false,
       left: false,
       right: false,
@@ -116,16 +116,16 @@
     var counter = 0;
 
     this.windowID = wind.setInterval(function() {
-      if ( key.isPressed('up') || that.pressedButtons.up ) {
+      if ( key.isPressed('up') || that.pressedKeys.up ) {
         that.ship.power(0.02);
       }
-      if ( key.isPressed('left') || that.pressedButtons.left ) {
+      if ( key.isPressed('left') || that.pressedKeys.left ) {
         that.ship.torque('left');
       }
-      if ( key.isPressed('right') || that.pressedButtons.right ) {
+      if ( key.isPressed('right') || that.pressedKeys.right ) {
         that.ship.torque('right');
       }
-      if ( key.isPressed('space') || that.pressedButtons.space ) {
+      if ( key.isPressed('space') || that.pressedKeys.space ) {
         if ( counter == 0 ) {
           that.bullets.push(that.ship.shoot());
         }
@@ -135,5 +135,13 @@
       }
       that.step();
     }, 6.25);
+  }
+
+  Game.prototype.pressKey = function ( key ) {
+    this.pressedKeys[ key ] = true;
+  }
+
+  Game.prototype.stopPressKey = function ( key ) {
+    this.pressedKeys [ key ] = false;
   }
 })(this);
