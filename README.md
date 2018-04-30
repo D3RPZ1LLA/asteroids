@@ -1,7 +1,7 @@
 Asteroids
 =========
-<a href="http://k5nobi.github.io/asteroids">
-k5nobi.github.io/asteroids
+<a href="http://blasteroids.sterlingforest.me/">
+blasteroids.sterlingforest.me
 </a>
 
 
@@ -17,6 +17,3 @@ Logic to wrap Objects around the Canvas
 
 - Note: Key binding is from the key master library: 
   https://github.com/madrobby/keymaster
-```
- .
-```
